@@ -23,7 +23,6 @@ U((1:s1),1) = sin(2*pi*f.*t(1:s1));
 U((1:s1),2) = sin(2*pi*f.*t(1:s1));
 V = U;      % V is another wave with identical initial condition
 W = U;
-U2 = [];
 %-------------------------------------------------------------------------%
 %% Finite Difference Scheme
 for j = 3:T-1
@@ -31,13 +30,9 @@ for j = 3:T-1
         
         %% Clamped End
         U1 = 2*U(j-1,i)-U(j-2,i); %finite difference in time
-        U2(j,i) = U(j-1,i-1) - 2*U(j-1,i) + U(j-1,i+1); %finite difference in space
-        U(j,i) = U1 + c*c.*U2(j,i); 
-
-        if i == Nx - 1 
-            U(j,i) = 0;
-        end
-
+        U2 = U(j-1,i-1) - 2*U(j-1,i) + U(j-1,i+1); %finite difference in space
+        U(j,i) = U1 + c*c.*U2; 
+        
         %% Simply Support
         V1 = 2*V(j-1,i)-V(j-2,i);%finite difference in time
         V2 = V(j-1,i-1)-2*V(j-1,i)+V(j-1,i+1); %finite difference in space
@@ -56,7 +51,7 @@ for j = 3:T-1
      W(j+1,Nx) = W1; % Free End
      V(j+1,Nx) = 0; % Simply Support
      U(j+1,Nx) = 0; % Clamped end
-
+     U(j,Nx-1) = 0; % Clamped end
 end
 %-------------------------------------------------------------------------%
 %% Plot for the travelling waves
