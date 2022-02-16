@@ -6,9 +6,9 @@ close all;
 model = createpde('structural','modal-solid');
 
 %% set dimension
-XWidth = 4; %width of the plate
+XWidth = 10; %width of the plate
 YLength = XWidth; %length of the plate
-ZHeight = 0.2; %height of the plate
+ZHeight = 1; %height of the plate
 
 %% set number of elements
 numXelements = 16; %number of elements along the plate width
@@ -35,12 +35,12 @@ pdegplot(model, 'FaceLabels', 'on', 'FaceAlpha', 0.5); %plot the geometry with
 %labels on the faces for setting boundary conditions
 
 %% material properties
-structuralProperties(model, 'YoungsModulus', 3e10, ...
-                             'PoissonsRatio', 0.15, ...
-                             'MassDensity', 1750);
+structuralProperties(model, 'YoungsModulus', 200e9, ...
+                             'PoissonsRatio', 0.3, ...
+                             'MassDensity', 8000);
 
 %% Boundary conditions
-structuralBC(model, 'Edge', 1:4,'Constraint', 'free');
+structuralBC(model, 'Edge', [1,4],'ZDisplacement', 0);
 
 %% add the final mesh to the model.
 generateMesh(model, 'Hmin', ZHeight*2);
@@ -61,49 +61,15 @@ disp(tfreqHz);
 %% Plot
 h = figure;
 h.Position = [100, 100, 900, 600]; %set the location and size of the figure
-numToPrint = 50; %number of modes to plot
+numToPrint = 13; %number of modes to plot
 for ii = 4:numToPrint
- switch ii
-    case 11
-        figure(1)
-        pdeplot3D(model, 'ColorMapData', result.ModeShapes.uz(:, ii));
-     axis equal;
-     title(sprintf(['Mode=%d, z-displacement\n',...
-     'Frequency(Hz): FEM=%g'],...
-     ii, freqHz(ii)));
-    case 12
-        figure(2)
-        pdeplot3D(model, 'ColorMapData', result.ModeShapes.uz(:, ii));
-     axis equal;
-     title(sprintf(['Mode=%d, z-displacement\n',...
-     'Frequency(Hz): FEM=%g'],...
-     ii, freqHz(ii)));
-    case 22
-        figure(3)
-        pdeplot3D(model, 'ColorMapData', result.ModeShapes.uz(:, ii));
-     axis equal;
-     title(sprintf(['Mode=%d, z-displacement\n',...
-     'Frequency(Hz): FEM=%g'],...
-     ii, freqHz(ii)));
-    case 44
-        figure(4)
-        pdeplot3D(model, 'ColorMapData', result.ModeShapes.uz(:, ii));
-     axis equal;
-     title(sprintf(['Mode=%d, z-displacement\n',...
-     'Frequency(Hz): FEM=%g'],...
-     ii, freqHz(ii)));
-    otherwise
-        disp('other value')
- end
- 
+ subplot(5, 2, ii-3);
+ pdeplot3D(model, 'ColorMapData', result.ModeShapes.uz(:, ii));
+ axis equal;
+ title(sprintf(['Mode=%d, z-displacement\n',...
+ 'Frequency(Hz): FEM=%g'],...
+ ii, freqHz(ii)));
+
 end
-
-
-
-
-
-
-
-
 
 
