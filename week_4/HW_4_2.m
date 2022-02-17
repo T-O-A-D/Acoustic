@@ -36,11 +36,11 @@ pdegplot(model, 'FaceLabels', 'on', 'FaceAlpha', 0.5); %plot the geometry with
 
 %% material properties
 structuralProperties(model, 'YoungsModulus', 200e9, ...
-                             'PoissonsRatio', 0.3, ...
+                             'PoissonsRatio', 0.28, ...
                              'MassDensity', 8000);
 
 %% Boundary conditions
-structuralBC(model, 'Edge', 1:4,'ZDisplacement', 0);
+structuralBC(model, 'Face', [2,3,4,5],'ZDisplacement', 0);
 
 %% add the final mesh to the model.
 generateMesh(model, 'Hmin', ZHeight*2);

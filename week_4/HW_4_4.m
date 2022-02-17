@@ -11,9 +11,9 @@ YLength = XWidth; %length of the plate
 ZHeight = 1; %height of the plate
 
 %% set number of elements
-numXelements = 16; %number of elements along the plate width
-numYelements = 16; %number of elements along the plate length
-numZelements = 10; %number of elements along the plate height
+numXelements = 32; %number of elements along the plate width
+numYelements = 32; %number of elements along the plate length
+numZelements = 20; %number of elements along the plate height
 
 %% set mesh grid
 [xg, yg, zg] = meshgrid(0:XWidth/numXelements:XWidth, ...
@@ -40,7 +40,7 @@ structuralProperties(model, 'YoungsModulus', 200e9, ...
                              'MassDensity', 8000);
 
 %% Boundary conditions
-structuralBC(model, 'Edge', 1:4,'Constraint','free');
+structuralBC(model, 'Face', [2,3,4,5],'Constraint','free');
 
 %% add the final mesh to the model.
 generateMesh(model, 'Hmin', ZHeight*2);
@@ -61,9 +61,9 @@ disp(tfreqHz);
 %% Plot
 h = figure;
 h.Position = [100, 100, 900, 600]; %set the location and size of the figure
-numToPrint = 13; %number of modes to plot
-for ii = 4:numToPrint
- subplot(5, 2, ii-3);
+numToPrint = 16; %number of modes to plot
+for ii = 7:numToPrint
+ subplot(5, 2, ii-6);
  pdeplot3D(model, 'ColorMapData', result.ModeShapes.uz(:, ii));
  axis equal;
  title(sprintf(['Mode=%d, z-displacement\n',...

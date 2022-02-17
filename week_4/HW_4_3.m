@@ -40,7 +40,7 @@ structuralProperties(model, 'YoungsModulus', 200e9, ...
                              'MassDensity', 8000);
 
 %% Boundary conditions
-structuralBC(model, 'Edge', [1,4],'ZDisplacement', 0);
+structuralBC(model, 'Face', [2,4],'ZDisplacement', 0);
 
 %% add the final mesh to the model.
 generateMesh(model, 'Hmin', ZHeight*2);
