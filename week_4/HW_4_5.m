@@ -11,8 +11,8 @@ YLength = XWidth; %length of the plate
 ZHeight = 0.2; %height of the plate
 
 %% set number of elements
-numXelements = 16; %number of elements along the plate width
-numYelements = 16; %number of elements along the plate length
+numXelements = 50; %number of elements along the plate width
+numYelements = numXelements; %number of elements along the plate length
 numZelements = 10; %number of elements along the plate height
 
 %% set mesh grid
@@ -40,7 +40,7 @@ structuralProperties(model, 'YoungsModulus' , 3e10, ...
                              'MassDensity'  , 1750);
 
 %% Boundary conditions
-structuralBC(model, 'Edge', 1:4,'Constraint', 'free');
+structuralBC(model, 'Face', [2,3,4,5],'Constraint', 'free');
 
 %% add the final mesh to the model.
 generateMesh(model, 'Hmin', ZHeight*2);
