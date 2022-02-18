@@ -95,15 +95,4 @@ for ii = 4:numToPrint
     otherwise
         disp('other value')
  end
- 
 end
-
-
-
-
-
-
-
-
-
-

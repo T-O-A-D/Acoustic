@@ -49,7 +49,9 @@ for j = 3:T-1
      % U(j+1,Nx) = 0.5*( U(j,Nx)+U(j,Nx-1)); 
 
      W(j+1,Nx) = W1; % Free End
+     
      V(j+1,Nx) = 0; % Simply Support
+     
      U(j+1,Nx) = 0; % Clamped end
      U(j,Nx-1) = 0; % Clamped end
 end
