@@ -1,0 +1,8 @@
+
+function [OctaveCenterFrequencies,OctaveData,Flow,Fhigh] = Prob_4(f_ave, dB_ave)
+%Octave Band frequency spectrum
+[OctaveData,OctaveCenterFrequencies,Flow,Fhigh] = NarrowToNthOctave(f_ave,dB_ave,3);
+figure;
+semilogx(OctaveCenterFrequencies,OctaveData);
+title("")
+end
